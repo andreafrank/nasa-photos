@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Search = () => {
 	const [term, setTerm] = useState('green');
   const [results, setResults] = useState([]);
+	const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     const search = async () => {
@@ -16,16 +16,14 @@ const Search = () => {
       })
 			.then((response) => {
 				setResults(response.data.collection.items)
-				console.log(results)
 			})
 			// todo: set up .catch
     };
 
-		console.log(results)
     if (term && !results.length) {
 			 search();
 		} else {
-			const timeoutId = setTimeout(() => {
+			 const timeoutId = setTimeout(() => {
 				if (term) {
 					search();
 				};
@@ -37,7 +35,7 @@ const Search = () => {
 		}
 	}, [term]);
 
-  const renderedResults = results.map((result) => {
+  const renderedResults = results.map((result, index) => {
 		const nasaId = (result.data[0].nasa_id);
 		const nasaHref = (result.links[0].href);
 		const nasaDescription = (result.data[0].description);
@@ -45,27 +43,31 @@ const Search = () => {
 		return (
 			<div key={nasaId}>
 				<div>
-					<img src={nasaHref}
+					{index + 1}
+					<img
+						src={nasaHref}
 						alt={nasaDescription}
 					/>
+					{nasaDescription}
 				</div>
 			</div>
 		);
 	});
 
+
 	return (
 		<div>
 			<div>
+				<label>Enter search term</label>
+				<input
+					value={term}
+					onChange={e => setTerm(e.target.value)}
+				/>
 				<div>
-					<label>Enter search term</label>
-					<input
-						value={term}
-						onChange={e => setTerm(e.target.value)}
-					/>
+						displaying {results.length} results
 				</div>
 			</div>
 			<div>
-				found NUMBER results
 				{renderedResults}
 			</div>
 		</div>
@@ -73,5 +75,3 @@ const Search = () => {
 };
 
 export default Search;
-
-// href={`https://images-assets.nasa.gov/${nasaId}/${nasaId}~thumb.jpg`}
