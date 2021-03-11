@@ -3,10 +3,12 @@ import React from 'react';
 const ImageCard = ({ image }) => {
   const nasaImage = (image.links[0].href);
   const nasaDescription = (image.data[0].description);
+  const nasaId = (image.data[0].nasa_id)
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
       <img
+        key={nasaId}
         src={nasaImage}
         alt={nasaDescription}
         className="w-full"

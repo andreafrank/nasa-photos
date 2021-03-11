@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ImageCard from './ImageCard';
+import ImageSearch from './ImageSearch';
 
 const Search = () => {
-	const [term, setTerm] = useState('');
+	const [term, setTerm] = useState('green');
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-	const [clicked, setClicked] = useState(false);
-
 
   useEffect(() => {
     const search = async () => {
@@ -20,6 +19,7 @@ const Search = () => {
 			.then((response) => {
 				setResults(response.data.collection.items)
         setIsLoading(false);
+				console.log(term)
 			})
 			// todo: set up .catch
     };
@@ -40,34 +40,25 @@ const Search = () => {
 	}, [term]);
 
   const renderedResults = results.map((result, index) => {
-		const nasaId = (result.data[0].nasa_id);
-
 		return (
 			<div>
-					{index + 1}
-					<ImageCard key={nasaId} image={result} />
+				{index + 1}*
+				<ImageCard image={result} />
+				{!isLoading && results.length === 0
+					? <h1 className="text-6xl text-center mx-auto mt-32">No images found</h1>
+					: <h1>{results.length} images found</h1>}
 			</div>
 		);
 	});
 
 	return (
-			<div>
-				<div>
-					<label>Enter search term</label>
-					<input
-						value={term}
-						onChange={e => setTerm(e.target.value)}
-					/>
-					<div>
-							displaying {results.length} results
-					</div>
-				</div>
-				<div className="container mx-auto">
-					<div className="grid grid-cols-3 gap-4">
-						{renderedResults}
-					</div>
-				</div>
-			</div>
+		<div className="container mx-auto">
+			<ImageSearch searchText={(text) => setTerm(text)} />
+				{isLoading
+					? <h1 className="text-6xl text-center mx-auto mt-32">Loading</h1>
+					: <div className="grid grid-cols-3 gap-4">{renderedResults}</div>
+				}
+		</div>
 	)
 };
 
