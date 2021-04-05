@@ -15,7 +15,7 @@ const ImageCard = ({ image }) => {
         className="w-full"
       />
       <div className="px-6 py-4">
-        <div className="font-bold text-purple-500 mb-2 max-h-24">
+        <div className="font-bold text-purple-500 mb-2">
           {(nasaDescription.length > 100)
             ? shortened + "..."
             : nasaDescription

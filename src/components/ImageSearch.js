@@ -15,10 +15,10 @@ const ImageSearch = ({ searchText }) => {
           <input
             value={text}
             onChange={e => setText(e.target.value)}
-            className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+            className="appearance-none bg-transparent border-none w-full text-gray-800 mr-3 py-1 px-2 leading-tight focus:outline-none placeholder-white placeholder-opacity-100"
             placeholder="enter search term"
             />
-            <button className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="submit">
+            <button className="flex-shrink-0 text-sm border-4 text-white py-1 px-2 rounded" type="submit">
               Search
             </button>
         </div>
